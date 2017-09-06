@@ -4,9 +4,9 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 
 | Command                                            | Description                                           |
 |----------------------------------------------------|-------------------------------------------------------|
-| `docker build -t friendlyname .`                   | Create image using this directory's Dockerfile        |
-| `docker run -p 4000:80 friendlyname`               | Run "friendlyname" mapping port 4000 to 80            |
-| `docker run -d -p 4000:80 friendlyname`            | Same thing, but in detached mode                      |
+| `docker build -t <repository> .`                   | Create image using this directory's `Dockerfile`      |
+| `docker run -p 4000:80 <repository>`               | Run <repository> mapping port 4000 to 80              |
+| `docker run -d -p 4000:80 <repository>`            | Same thing, but in detached mode                      |
 | `docker container ls`                              | List all running containers                           |
 | `docker container ls -a`                           | List all containers, even those not running           |
 | `docker container stop <hash>`                     | Gracefully stop the specified container               |
@@ -17,6 +17,6 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 | `docker image rm <image id>`                       | Remove specified image from this machine              |
 | `docker image rm $(docker image ls -a -q)`         | Remove all images from this machine                   |
 | `docker login`                                     | Log in this CLI session using your docker credentials |
-| `docker tag <image> username/repository:tag`       | Tag <image> for upload to registry                    |
-| `docker push username/repository:tag`              | Upload tagged image to registry                       |
-| `docker run username/repository:tag`               | Run image from a registry                             |
+| `docker tag <image> <username>/<repository>:<tag>` | Tag <image> for upload to registry                    |
+| `docker push <username>/<repository>:<tag>`        | Upload tagged image to registry                       |
+| `docker run <username>/<repository>:<tag>`         | Run image from a registry                             |
