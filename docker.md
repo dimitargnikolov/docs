@@ -26,6 +26,7 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 ## Services
 
 | Command                                                                    | Description                                           |
+|----------------------------------------------------------------------------|-------------------------------------------------------|
 | `docker stack ls`                                                          | List stacks or apps                                   |
 | `docker stack deploy -c <composefile> <appname>`                           | Run the specified Compose file                        |
 | `docker service ls`                                                        | List running services associated with an app          |
@@ -37,6 +38,7 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 ## Swarms / Clusters
 
 | Command                                                                    | Description                                           |
+|----------------------------------------------------------------------------|-------------------------------------------------------|
 | `docker-machine create --driver virtualbox myvm1`                          | Create a VM (Mac, Win7, Linux)                        |
 | `docker-machine create -d hyperv --hyperv-virtual-switch "myswitch" myvm1` | Win10                                                 |
 | `docker-machine env myvm1`                                                 | View basic information about your node                |
