@@ -5,7 +5,7 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 | Command                                            | Description                                           |
 |----------------------------------------------------|-------------------------------------------------------|
 | `docker build -t <image name> .`                   | Create image using this directory's `Dockerfile`      |
-| `docker run -p 4000:80 <image name>`               | Run `<repository>` mapping port 4000 to 80            |
+| `docker run -p 4000:80 <image name>`               | Run `<repository>`, mapping port 4000 to 80           |
 | `docker run -d -p 4000:80 <image name>`            | Same thing, but in detached mode                      |
 | `docker container ls`                              | List all running containers                           |
 | `docker container ls -a`                           | List all containers, even those not running           |
