@@ -40,7 +40,7 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 | Command                                                                    | Description                                           |
 |----------------------------------------------------------------------------|-------------------------------------------------------|
 | `docker-machine create --driver virtualbox myvm1`                          | Create a VM (Mac, Win7, Linux)                        |
-| `docker-machine create -d hyperv --hyperv-virtual-switch "myswitch" myvm1` | Win10                                                 |
+| `docker-machine create -d hyperv --hyperv-virtual-switch "myswitch" myvm1` | Create a VM (Win10)                                   |
 | `docker-machine env myvm1`                                                 | View basic information about your node                |
 | `docker-machine ssh myvm1 "docker node ls"`                                | List the nodes in your swarm                          |
 | `docker-machine ssh myvm1 "docker node inspect <node ID>"`                 | Inspect a node                                        |
