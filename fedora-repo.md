@@ -1,38 +1,30 @@
-Fedora start/stop
------------------
-
-Useful resources
-~~~~~~~~~~~~~~~~
-
+# Useful resources
 https://www.w3.org/TR/rdf11-primer
 https://www.w3.org/TR/ldp-primer/
 https://wiki.duraspace.org/display/FEDORA474/First+Steps
 https://wiki.duraspace.org/display/FEDORA474/The+Fedora+4+object+model
 https://wiki.duraspace.org/display/FEDORA474/RESTful+HTTP+API
 
-Start
-~~~~~
+# Fedora start/stop
+
+## Start
 ```
 daemon.sh start
 ```
 
-Monitor logs
-~~~~~~~~~~~~
+## Monitor logs
 ```
 tail -f $CATALINA_HOME/logs/catalina-daemon.out
 ```
 
-Stop
-~~~~
+## Stop
 ```
 daemon.sh stop
 ```
 
-Use cases
----------
+# Use cases
 
-Read
-~~~~
+## Read
 
 1. Read the metadata of a container node.
 
@@ -44,8 +36,7 @@ http://localhost:8080/fcrepo-webapp-4.7.4/rest/ \
   ```
 2. Read the metadata of a resource node. Is that even possible?
 
-Create nodes with custom names or metadata
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Create nodes with custom names or metadata
 
 1. Create a container node with user-specified name, under a user-specified parent node.
   ```
@@ -66,15 +57,13 @@ http://localhost:8080/fcrepo-webapp-4.7.4/rest/images/image1
   ```
   ```
 
-Create nodes with auto assigned names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Create nodes with auto assigned names
 
 ```
 curl -v -X POST http://localhost:8080/fcrepo-webapp-4.7.4/rest/
 ```
 
-Delete a node
-~~~~~~~~~~~~~
+## Delete a node
 ```
 curl -v -X DELETE \
 -H "Accept: application/ld+json;profile=\"http://www.w3.org/ns/json-ld#flattened\"" \
