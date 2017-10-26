@@ -17,7 +17,7 @@ From [Docker Tutorial](https://docs.docker.com/get-started/).
 | `docker container rm $(docker container ls -a -q)`                         | Remove all containers                                 |
 | `docker image ls -a`                                                       | List all images on this machine                       |
 | `docker image rm <image id>`                                               | Remove specified image from this machine              |
-| `docker image rm $(docker image ls -a -q)`                                 | Remove all images from this machine                   |
+| `docker image rm$(docker image ls -a -q)`                                 | Remove all images from this machine                   |
 | `docker login`                                                             | Log in this CLI session using your docker credentials |
 | `docker tag <image> <username>/<repository>:<tag>`                         | Tag `<image>` for upload to registry                  |
 | `docker push <username>/<repository>:<tag>`                                | Upload tagged image to registry                       |
