@@ -1,9 +1,9 @@
 # Useful resources
-https://www.w3.org/TR/rdf11-primer
-https://www.w3.org/TR/ldp-primer/
-https://wiki.duraspace.org/display/FEDORA474/First+Steps
-https://wiki.duraspace.org/display/FEDORA474/The+Fedora+4+object+model
-https://wiki.duraspace.org/display/FEDORA474/RESTful+HTTP+API
+1. https://www.w3.org/TR/rdf11-primer
+2. https://www.w3.org/TR/ldp-primer/
+3. https://wiki.duraspace.org/display/FEDORA474/First+Steps
+4. https://wiki.duraspace.org/display/FEDORA474/The+Fedora+4+object+model
+5. https://wiki.duraspace.org/display/FEDORA474/RESTful+HTTP+API
 
 # Fedora start/stop
 
@@ -35,6 +35,9 @@ http://localhost:8080/fcrepo-webapp-4.7.4/rest/ \
 | python -m json.tool
   ```
 2. Read the metadata of a resource node. Is that even possible?
+
+```
+```
 
 ## Create nodes with custom names or metadata
 
