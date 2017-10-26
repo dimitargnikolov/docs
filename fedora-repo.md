@@ -3,6 +3,7 @@ Fedora start/stop
 
 Useful resources
 ~~~~~~~~~~~~~~~~
+
 https://www.w3.org/TR/rdf11-primer
 https://www.w3.org/TR/ldp-primer/
 https://wiki.duraspace.org/display/FEDORA474/First+Steps
