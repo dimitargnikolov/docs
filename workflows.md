@@ -18,9 +18,9 @@ asdf
 
 ### Useful Features
 * Easy integration with HPC batch systems like **PBS/Torque**.
-* Support for **Docker** and **Singularity** containers in the Transformation/Executables catalog. .
+* Support for **Docker** and **Singularity** containers in the Transformation/Executables catalog.
 * Integration with **Jupyter notebooks**: In addition to the DAX API for creating workflows, Pegasus has a Python API for running and monitoring workflows from Jupyter notebooks or other Python code.
-* For *short tasks* where the overhead of running them on a cluster is too big, Pegasus has a *task clustering*, which combines the short task together in a bigger job. This feature needs to be tested further to determine how useful in practice it is.
+* For **short tasks** where the overhead of running them on a cluster is too big, Pegasus has a **task clustering**, which combines the short task together in a bigger job. This feature needs to be tested further to determine how useful in practice it is.
 
 ### Example Workflow
 #### Definition
