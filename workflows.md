@@ -7,13 +7,13 @@ asdf
 * Web: [Docs](https://pegasus.isi.edu/documentation/), [Github](https://github.com/pegasus-isi/pegasus)
 * License: [Apache 2](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
-### Advantages
-* asdf 1
-* asdf 2
+### Job Monitoring, Logging, and Summary
+* A **Web app** allows you to minotor the running of the job or how the job ran. There is **a lot of detail**, perhaps too much. It is difficult to get a picture at a glance of what a specific workflow is doing. For example, a simple `split`, follower by a few `ls`s generates multiple jobs (subunits of workflow), not only for the actual commands, but also for cleaning up, creating directories, registering the workflow. To see what each job does you have to drill down in it, view its tasks (sub units of a job), and then you can see the actual command represented by the job. This structure is **a little cumbersome**.
+* There are a number of **command-line tools** that allow you to monitor progress, debug, and view several summaries from the command line.
 
-### Disadvantages
-* asdf 1
-* asdf 2
+### Configuration adn Ease of Use
+* Workflows are **defined as code**. Interfaces exist for **Python, R, Java, and Perl**. As such, anyone using HPC infrastructure should be able to define the DAGs without much trouble. This means that **defining the workflow is like writing another script** for your project. This is OK, but it lacks the self-documenting, easy-to-translate from individual commands to an automated workflow, nature that Snakemake has.
+* In Pegasus, **the workflows are independent of the underlying physical infrastructure** (location of data, executables, cluster end-points) where they are run. This makes them **portable**, but it results in a more abstract workflow that you then have to configure with the physical infrastructure parameters. There are Site (temp and output storage locations), Transformation (executable locations), and Replica (input locations) "catalogs" that need to be configured for a workflow. Thus, **defining the workflow is abstract and cumbersome**, and it results in extra jobs for file management being added to the worfklow. This diagram illustrates this nicely: ![Workflow composition with the Site, Transformation, and Replica catalogs.](https://pegasus.isi.edu/documentation/images/tutorial-pegasus-catalogs.png)
 
 ### Example Workflow
 #### Definition
@@ -80,7 +80,7 @@ asdf
 * License: [Apache 2](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
 ### Advantages
-* asdf 1
+* 
 * asdf 2
 
 ### Disadvantages
