@@ -60,7 +60,7 @@ asdf
 
 ### Example Workflow
 #### Definition
-```
+```yaml
 configfile: "config.json"
 
 rule all:
