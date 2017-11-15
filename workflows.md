@@ -13,7 +13,14 @@ asdf
 
 ### Configuration and Ease of Use
 * Workflows are **defined as code**. Interfaces exist for **Python, R, Java, and Perl**. As such, anyone using HPC infrastructure should be able to define the DAGs without much trouble. This means that **defining the workflow is like writing another script** for your project. This is OK, but it lacks the self-documenting, easy-to-translate from individual commands to an automated workflow, nature that Snakemake has.
-* In Pegasus, **the workflows are independent of the underlying physical infrastructure** (location of data, executables, cluster end-points) where they are run. This makes them **portable**, but it results in a more abstract workflow that you then have to configure with the physical infrastructure parameters. There are Site (temp and output storage locations), Transformation (executable locations), and Replica (input locations) "catalogs" that need to be configured for a workflow. Thus, **defining the workflow is abstract and cumbersome**, and it results in extra jobs for file management being added to the worfklow. This diagram illustrates this nicely: ![Workflow composition with the Site, Transformation, and Replica catalogs.](https://pegasus.isi.edu/documentation/images/tutorial-pegasus-catalogs.png)
+* In Pegasus, **the workflows are independent of the underlying physical infrastructure** (location of data, executables, cluster end-points) where they are run. This makes them **portable**, but it results in a more abstract workflow that you then have to configure with the physical infrastructure parameters. There are Site (temp and output storage locations), Transformation (executable locations), and Replica (input locations) "catalogs" (XML files) that need to be configured for a workflow. Thus, **defining the workflow is abstract and cumbersome**, and it results in extra jobs for file management being added to the workflow. This diagram illustrates this nicely: ![Workflow composition with the Site, Transformation, and Replica catalogs.](https://pegasus.isi.edu/documentation/images/tutorial-pegasus-catalogs.png)
+* While a bit cumbersome, **the catalogs streamline accessing data on remote hosts**. You declare where your inputs, outputs, and scratch locations are in the catalogs, and Pegasus takes care of any file transfer that need to occur when you deploy the workflow on an HPC system.
+
+### Useful Features
+* Easy integration with HPC batch systems like **PBS/Torque**.
+* Support for **Docker** and **Singularity** containers in the Transformation/Executables catalog. .
+* Integration with **Jupyter notebooks**: In addition to the DAX API for creating workflows, Pegasus has a Python API for running and monitoring workflows from Jupyter notebooks or other Python code.
+* For *short tasks* where the overhead of running them on a cluster is too big, Pegasus has a *task clustering*, which combines the short task together in a bigger job. This feature needs to be tested further to determine how useful in practice it is.
 
 ### Example Workflow
 #### Definition
