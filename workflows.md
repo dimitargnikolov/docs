@@ -109,12 +109,12 @@ rule reduce_share_counts:
 ```
 
 #### Execution
-```
+```bash
 $ snakemake --cores 16
 ```
 
 #### Directory Structure
-```
+```bash
 $ tree
 .
 ├── README.md
