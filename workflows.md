@@ -61,17 +61,72 @@ asdf
 ### Example Workflow
 #### Definition
 ```
-asdf
+configfile: "config.json"
+
+rule all:
+    input:
+        '{data_dir}/share-counts/share-counts-by-url.tab'.format(**config),
+        '{data_dir}/share-counts/share-counts-by-domain.tab'.format(**config),
+
+rule create_news_sources_list:
+    input:
+        '{data_dir}/pageranks/part-r-00000'.format(**config),
+        '{data_dir}/top500.tab'.format(**config)
+    output:
+        '{data_dir}/news-sources.tab'.format(**config)
+    shell:
+        'python {code_dir}/create_news_sources_list.py {{input}} {{output}}'.format(**config)
+
+rule strip_tweets:
+    input:
+        '{data_dir}/tweets/raw'.format(**config),
+        '{data_dir}/news-sources.tab'.format(**config),
+    output:
+        '{data_dir}/tweets/news'.format(**config)
+    threads:
+        config['default_num_threads']
+    shell:
+        'python {code_dir}/strip_tweets.py {{threads}} {{input}} {{output}}'.format(**config)
+
+rule count_shares:
+    input:
+        '{data_dir}/tweets/news'.format(**config)
+    output:
+        '{data_dir}/share-counts/share-counts-by-url'.format(**config),
+        '{data_dir}/share-counts/share-counts-by-domain'.format(**config)
+    threads:
+        config['default_num_threads']
+    shell:
+        'python {code_dir}/count_shares.py {{threads}} {{input}} {{output}}'.format(**config)
+
+rule reduce_share_counts:
+    input:
+        '{data_dir}/share-counts/share-counts-by-{{agg}}'.format(**config)
+    output:
+        '{data_dir}/share-counts/share-counts-by-{{agg}}.tab'.format(**config)
+    shell:
+        'python {code_dir}/reduce.py --value_convert_fn=int --sort=reverse sum {{input}} {{output}}'.format(**config)
 ```
 
 #### Execution
 ```
-asdf
+$ snakemake --cores 16
 ```
 
 #### Directory Structure
 ```
-asdf
+$ tree
+.
+├── README.md
+├── Snakefile
+├── config.json
+└── scripts
+    ├── config.py
+    ├── count_shares.py
+    ├── create_news_sources_list.py
+    ├── reduce.py
+    ├── strip_tweets.py
+    └── urls.py
 ```
 
 #### PBS
