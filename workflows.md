@@ -1,8 +1,6 @@
 # Workflow Management Tools
 
 ## Pegasus
-### Summary
-asdf
 
 * Web: [Docs](https://pegasus.isi.edu/documentation/), [Github](https://github.com/pegasus-isi/pegasus)
 * License: [Apache 2](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
@@ -212,18 +210,23 @@ pegasus-plan --conf pegasus.properties \
 
 ## Snakemake
 ### Summary
-asdf
 
 * Web: [Docs](http://snakemake.readthedocs.io/en/stable/), [BitBucket](https://bitbucket.org/snakemake/snakemake)
 * License: [MIT License](https://tldrlegal.com/license/mit-license)
 
-### Advantages
-* asdf 1
-* asdf 2
+### Features
+* Has native support for using in a **batch cluster HPC environment**. While each task can be configured with required nodes, cores, memory, etc. they all need to be executed in the batch system environment. 
+* Has support for running jobs from **Docker and Singularity containers**.
+* Has a Python API for starting and stopping jobs, which makes it possible to use with Jupyter notebooks.
+* Limited commercial cloud support.
 
-### Disadvantages
-* asdf 1
-* asdf 2
+### Configuration and Ease of Use
+* The **easiest to use**, and most user-friendly syntax. At the same time, Python code is supported in the `Snakefile` itself, so power users could write custom Python logic.
+* The resulting `Snakefile` and configuration, is a **self-documenting experiment** that translates closely to how you would run scripts on the command line.
+
+### Job Monitoring, Logging, and Summary
+* The biggest disadvantage is there is **no job monitoring**.
+* Very **limited visualization of resulting DAGs (but useful)**.
 
 ### Example Workflow
 #### Definition
@@ -296,20 +299,21 @@ $ tree
     └── urls.py
 ```
 
+## Airflow and Luigi
+
+### Features
+* Less friendly to HPC and batch system environments. However, with some limited coding, we can provide a solution. A SLURM one for luigi already exists, which would be very similar to a PBS/Torque solution. A solution for Airflow is on the list of planned features for 2017. luigi also has a sciluigi wrapper that makes working with scientific workflows easier.
+* Major difference is Airflow has its own **scheduler**, while for luigi, you need to use cron jobs.
+* DAGs are defined as Python code. Familiarity with Python and OOP is required.
+
+### Job Monitoring, Logging, and Summary
+* Both provide useful command-line logging.
+* GUI for monitoring jobs is more extensive in Airflow.
+
 ## Airflow
-### Summary
-asdf
 
 * Web: [Docs](https://airflow.apache.org/), [Github](https://github.com/apache/incubator-airflow)
 * License: [Apache 2](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
-
-### Advantages
-* 
-* asdf 2
-
-### Disadvantages
-* asdf 1
-* asdf 2
 
 ### Example Workflow
 #### Definition
@@ -332,10 +336,10 @@ default_args = {
     'email_on_retry': False,
     'retries': 1,
     'retry_delay': timedelta(minutes=5),
-    # 'queue': 'bash_queue',
-    # 'pool': 'backfill',
-    # 'priority_weight': 10,
-    # 'end_date': datetime(2016, 1, 1),
+    'queue': 'bash_queue',
+    'pool': 'backfill',
+    'priority_weight': 10,
+    'end_date': datetime(2016, 1, 1),
 }
 
 dag = DAG(
@@ -369,7 +373,6 @@ t3 = BashOperator(
 
 t2.set_upstream(t1)
 t3.set_upstream(t1)
-
 ```
 
 #### Execution
