@@ -24,7 +24,7 @@ asdf
 
 ### PBS/Torque Integration
 
-Pegasus has direct support for execution on a batch HPC system powered by PBS/Torque, thourgh the Site Catalog.
+Pegasus has direct support for execution on a batch HPC system powered by PBS/Torque, through the Site Catalog.
 
 ### Example Workflow
 #### Definition
@@ -314,59 +314,150 @@ asdf
 ### Example Workflow
 #### Definition
 ```
-asdf
+"""
+Code that goes along with the Airflow located at:
+http://airflow.readthedocs.org/en/latest/tutorial.html
+"""
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
+from datetime import datetime, timedelta
+
+
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2015, 6, 1),
+    'email': ['airflow@airflow.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=5),
+    # 'queue': 'bash_queue',
+    # 'pool': 'backfill',
+    # 'priority_weight': 10,
+    # 'end_date': datetime(2016, 1, 1),
+}
+
+dag = DAG(
+    'tutorial', default_args=default_args, schedule_interval=timedelta(1))
+
+# t1, t2 and t3 are examples of tasks created by instantiating operators
+t1 = BashOperator(
+    task_id='print_date',
+    bash_command='date',
+    dag=dag)
+
+t2 = BashOperator(
+    task_id='sleep',
+    bash_command='sleep 5',
+    retries=3,
+    dag=dag)
+
+templated_command = """
+    {% for i in range(5) %}
+        echo "{{ ds }}"
+        echo "{{ macros.ds_add(ds, 7)}}"
+        echo "{{ params.my_param }}"
+    {% endfor %}
+"""
+
+t3 = BashOperator(
+    task_id='templated',
+    bash_command=templated_command,
+    params={'my_param': 'Parameter I passed in'},
+    dag=dag)
+
+t2.set_upstream(t1)
+t3.set_upstream(t1)
+
 ```
 
 #### Execution
 ```
-asdf
-```
-
-#### Directory Structure
-```
-asdf
-```
-
-#### PBS
-```
-asdf
+$ python workflow1.py
+$ airflow list_dags
+$ airflow list_tasks workflow1
+$ airflow list_tasks workflow1 --tree
 ```
 
 ## luigi
 ### Summary
-asdf
 
 * Web: [Docs](http://luigi.readthedocs.io/en/stable/workflows.html), [Github](https://github.com/spotify/luigi)
 * License: [Apache 2](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
-### Advantages
-* asdf 1
-* asdf 2
-
-### Disadvantages
-* asdf 1
-* asdf 2
-
 ### Example Workflow
 #### Definition
 ```
-asdf
+class AggregateArtists(luigi.Task):
+    date_interval = luigi.DateIntervalParameter()
+
+    def output(self):
+        return luigi.LocalTarget("data/artist_streams_%s.tsv" % self.date_interval)
+
+    def requires(self):
+        return [Streams(date) for date in self.date_interval]
+
+    def run(self):
+        artist_count = defaultdict(int)
+
+        for input in self.input():
+            with input.open('r') as in_file:
+                for line in in_file:
+                    timestamp, artist, track = line.strip().split()
+                    artist_count[artist] += 1
+
+        with self.output().open('w') as out_file:
+            for artist, count in artist_count.iteritems():
+                print >> out_file, artist, count
+
+class Top10Artists(luigi.Task):
+    date_interval = luigi.DateIntervalParameter()
+    use_hadoop = luigi.BoolParameter()
+
+    def requires(self):
+        if self.use_hadoop:
+            return AggregateArtistsHadoop(self.date_interval)
+        else:
+            return AggregateArtists(self.date_interval)
+
+    def output(self):
+        return luigi.LocalTarget("data/top_artists_%s.tsv" % self.date_interval)
+
+    def run(self):
+        top_10 = nlargest(10, self._input_iterator())
+        with self.output().open('w') as out_file:
+            for streams, artist in top_10:
+                print >> out_file, self.date_interval.date_a, self.date_interval.date_b, artist, streams
+
+    def _input_iterator(self):
+        with self.input().open('r') as in_file:
+            for line in in_file:
+                artist, streams = line.strip().split()
+                yield int(streams), int(artist)
+
+class ArtistToplistToDatabase(luigi.contrib.postgres.CopyToTable):
+    date_interval = luigi.DateIntervalParameter()
+    use_hadoop = luigi.BoolParameter()
+
+    host = "localhost"
+    database = "toplists"
+    user = "luigi"
+    password = "abc123"  # ;)
+    table = "top10"
+
+    columns = [("date_from", "DATE"),
+               ("date_to", "DATE"),
+               ("artist", "TEXT"),
+               ("streams", "INT")]
+
+    def requires(self):
+        return Top10Artists(self.date_interval, self.use_hadoop)
 ```
 
 #### Execution
 ```
-asdf
-```
+$ luigi --module top_artists AggregateArtists --local-scheduler --date-interval 2012-06
+$ luigi --module examples.top_artists Top10Artists --local-scheduler --date-interval 2012-07
 
-#### Directory Structure
 ```
-asdf
-```
-
-#### PBS
-```
-asdf
-```
-
-## Conclusion
-asdf
