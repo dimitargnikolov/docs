@@ -317,7 +317,7 @@ $ tree
 
 ### Example Workflow
 #### Definition
-```
+```python
 """
 Code that goes along with the Airflow located at:
 http://airflow.readthedocs.org/en/latest/tutorial.html
@@ -376,7 +376,7 @@ t3.set_upstream(t1)
 ```
 
 #### Execution
-```
+```shell
 $ python workflow1.py
 $ airflow list_dags
 $ airflow list_tasks workflow1
@@ -391,7 +391,7 @@ $ airflow list_tasks workflow1 --tree
 
 ### Example Workflow
 #### Definition
-```
+```python
 class AggregateArtists(luigi.Task):
     date_interval = luigi.DateIntervalParameter()
 
@@ -459,7 +459,7 @@ class ArtistToplistToDatabase(luigi.contrib.postgres.CopyToTable):
 ```
 
 #### Execution
-```
+```shell
 $ luigi --module top_artists AggregateArtists --local-scheduler --date-interval 2012-06
 $ luigi --module examples.top_artists Top10Artists --local-scheduler --date-interval 2012-07
 
