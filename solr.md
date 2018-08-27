@@ -4,10 +4,21 @@ $ solr start -c -p 8983 -s example/cloud/node1/solr
 $ solr start -c -p 7574 -s example/cloud/node2/solr -z localhost:9983
 ```
 
+## Guided
+```
+$ solr start -e cloud
+```
+
 # Stopping
 ```
 $ solr stop -all
 ```
+
+# Config
+
+A `configSet` includes at a minimum:
+1. schema file (named either `managed-schema` or `schema.xml`)
+2. `solrconfig.xml`
 
 # Collections
 
@@ -19,6 +30,13 @@ $ solr create -c <collection_name> -s 2 -rf 2
 ## Delete
 ```
 $ solr delete -c <collection_name>
+```
+
+# Indexing
+
+## In Bulk
+```
+$ post -c techproducts $SOLR_HOME/example/exampledocs/*
 ```
 
 # Query Examples
