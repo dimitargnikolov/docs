@@ -1,12 +1,18 @@
 # Table of Contents
 
+* [Table of Contents](#table-of-contents)
 * [Starting](#starting)
    * [Guided](#guided)
 * [Stopping](#stopping)
 * [Config](#config)
+   * [Add Schema Field](#add-schema-field)
+   * [Add Copy Field](#add-copy-field)
 * [Collections](#collections)
    * [Create](#create)
    * [Delete](#delete)
+	  * [Collection](#collection)
+	  * [Document by ID](#document-by-id)
+	  * [Documents by Query](#documents-by-query)
 * [Indexing](#indexing)
    * [In Bulk](#in-bulk)
 * [Query Examples](#query-examples)
@@ -14,7 +20,12 @@
    * [Field Search](#field-search)
    * [Phrase Search](#phrase-search)
    * [Combined Searches](#combined-searches)
-	  
+	  * [AND](#and)
+	  * [NOT](#not)
+   * [Faceted Search](#faceted-search)
+	  * [Range Facets](#range-facets)
+	  * [Pivot Facets](#pivot-facets)
+
 # Starting
 ```
 $ solr start -c -p 8983 -s example/cloud/node1/solr
