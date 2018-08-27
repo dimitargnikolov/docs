@@ -11,12 +11,12 @@ $ solr stop -all
 
 # Collections
 
-Create: 
+## Create
 ```
 $ solr create -c <collection_name> -s 2 -rf 2
 ```
 
-Delete:
+## Delete
 ```
 $ solr delete -c <collection_name>
 ```
@@ -52,10 +52,3 @@ Documents containing `electronics` but not `music`:
 ```
 $ curl "http://localhost:8983/solr/techproducts/select?q=%2Belectronics+-music"
 ```
-
-1. Download generic Linux tarball, untar, define MYSQL_HOME, update PATH.
-2. Run
-```
-$ mysqld --initialize --basedir=$MYSQL_HOME --datadir=$MYSQL_HOME/data
-```
-
