@@ -37,6 +37,18 @@ A `configSet` includes at a minimum:
 1. schema file (named either `managed-schema` or `schema.xml`)
 2. `solrconfig.xml`
 
+## Add Schema Field
+```
+$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/films/schema
+```
+
+## Add Copy Field
+A copy field can be set up to take all data from all fields and index it into a new field, which we can set up as the default to search against.
+
+```
+$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*","dest":"_text_"}}' http://localhost:8983/solr/films/schema
+```
+
 # Collections
 
 ## Create
@@ -45,8 +57,20 @@ $ solr create -c <collection_name> -s 2 -rf 2
 ```
 
 ## Delete
+
+### Collection
 ```
 $ solr delete -c <collection_name>
+```
+
+### Document by ID
+```
+$ post -c localDocs -d "<delete><id>SP2514N</id></delete>"
+```
+
+### Documents by Query
+```
+$ post -c localDocs -d "<delete><query>*:*</query></delete>"
 ```
 
 # Indexing
@@ -76,14 +100,30 @@ $ curl "http://localhost:8983/solr/techproducts/select?q=\"CAS+latency\""
 
 ## Combined Searches
 
+### AND
 For documents containing both `music` and `electronics`, we would have to query with `+music` and `+electronics` and encode the `+` to `%2B` (since `+` denotes a space in a URL):
 
 ```
 $ curl "http://localhost:8983/solr/techproducts/select?q=%2Belectronics%20%2Bmusic"
 ```
 
+### NOT
 Documents containing `electronics` but not `music`:
 
 ```
 $ curl "http://localhost:8983/solr/techproducts/select?q=%2Belectronics+-music"
+```
+
+## Faceted Search
+```
+$ curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=true&facet.field=genre_str"
+```
+
+### Range Facets
+```
+$ curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=true&facet.range=initial_release_date&facet.range.start=NOW-20YEAR&facet.range.end=NOW&facet.range.gap=%2B1YEAR"
+```
+### Pivot Facets
+```
+$ curl "http://localhost:8983/solr/films/select?q=*:*&rows=0&facet=on&facet.pivot=genre_str,directed_by_str"
 ```
