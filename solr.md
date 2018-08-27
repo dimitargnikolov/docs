@@ -1,3 +1,20 @@
+# Table of Contents
+
+* [Starting](#starting)
+   * [Guided](#guided)
+* [Stopping](#stopping)
+* [Config](#config)
+* [Collections](#collections)
+   * [Create](#create)
+   * [Delete](#delete)
+* [Indexing](#indexing)
+   * [In Bulk](#in-bulk)
+* [Query Examples](#query-examples)
+   * [Basic Search](#basic-search)
+   * [Field Search](#field-search)
+   * [Phrase Search](#phrase-search)
+   * [Combined Searches](#combined-searches)
+	  
 # Starting
 ```
 $ solr start -c -p 8983 -s example/cloud/node1/solr
