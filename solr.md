@@ -10,11 +10,11 @@
 * [Collections](#collections)
    * [Create](#create)
    * [Delete](#delete)
-	  * [Collection](#collection)
-	  * [Document by ID](#document-by-id)
-	  * [Documents by Query](#documents-by-query)
-* [Indexing](#indexing)
-   * [In Bulk](#in-bulk)
+* [Documents](#documents)
+   * [Delete by ID](#delete-by-id)
+   * [Delete by Query](#delete-by-query)
+   * [Index/Add](#indexadd)
+   * [Update](#update)
 * [Query Examples](#query-examples)
    * [Basic Search](#basic-search)
    * [Field Search](#field-search)
@@ -68,13 +68,13 @@ $ solr create -c <collection_name> -s 2 -rf 2
 ```
 
 ## Delete
-
-### Collection
 ```
 $ solr delete -c <collection_name>
 ```
 
-### Document by ID
+# Documents
+
+## Delete by ID
 Via `post`:
 ```
 $ post -c techproducts -d "<delete><id>TEST1</id></delete>"
@@ -85,7 +85,7 @@ Via `curl`:
 $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"id": "TEST1"}}'
 ```
 
-### Documents by Query
+## Delete by Query
 Via `post`:
 ```
 $ post -c techproducts -d "<delete><query>*:*</query></delete>"
@@ -96,9 +96,8 @@ Via `curl`:
 $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"query": "*:*"}}'
 ```
 
-# Index/Add Document
+## Index/Add
 
-## In Bulk
 Via `post`:
 ```
 $ post -c techproducts $SOLR_HOME/example/exampledocs/*
@@ -109,9 +108,7 @@ Via `curl`:
 $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type: application/json' -d '[{"id": "TEST1", "cat": ["electronics"], "name": "Test Product 1"}]'
 ```
 
-# Update Document
-
-## Atomic Update
+## Update
 ```
 $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type: application/json' -d '[{"id": "TEST1", "cat": {"add-distinct": ["electronics", "toys"]}, "name": {"set": "Test Product 1 Foundation"}}]'
 ```
