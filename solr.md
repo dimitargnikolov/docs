@@ -109,6 +109,13 @@ Via `curl`:
 $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type: application/json' -d '[{"id": "TEST1", "cat": ["electronics"], "name": "Test Product 1"}]'
 ```
 
+# Update Document
+
+## Atomic Update
+```
+$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type: application/json' -d '[{"id": "TEST1", "cat": {"add-distinct": ["electronics", "toys"]}, "name": {"set": "Test Product 1 Foundation"}}]'
+```
+
 # Query Examples
 
 ## Basic Search
