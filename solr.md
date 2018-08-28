@@ -77,23 +77,23 @@ $ solr delete -c <collection_name>
 ### Document by ID
 Via `post`:
 ```
-$ post -c localDocs -d "<delete><id>SP2514N</id></delete>"
+$ post -c techproducts -d "<delete><id>TEST1</id></delete>"
 ```
 
 Via `curl`:
 ```
-$ curl http://localhost:8983/solr/localDocs/update?commit=true --data '<delete><id>SP2514N</id></delete>' -H 'Content-type:text/xml; charset=utf-8'
+$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"id": "TEST1"}}'
 ```
 
 ### Documents by Query
 Via `post`:
 ```
-$ post -c localDocs -d "<delete><query>*:*</query></delete>"
+$ post -c techproducts -d "<delete><query>*:*</query></delete>"
 ```
 
 Via `curl`:
 ```
-$ curl http://localhost:8983/solr/localDocs/update?commit=true --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
+$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"query": "*:*"}}'
 ```
 
 # Index/Add Document
@@ -106,7 +106,7 @@ $ post -c techproducts $SOLR_HOME/example/exampledocs/*
 
 Via `curl`:
 ```
-$ curl 'localhost:8983/solr/techproducts/update?commit=true' -H 'Contenttype: application/json' -d '[{"id": "TEST1", "cat": ["electronics"], "name": "Test Product 1"}]'
+$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type: application/json' -d '[{"id": "TEST1", "cat": ["electronics"], "name": "Test Product 1"}]'
 ```
 
 # Query Examples
