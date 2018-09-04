@@ -4,7 +4,13 @@
 * [Starting](#starting)
    * [Guided](#guided)
 * [Stopping](#stopping)
-* [Config](#config)
+* [Config and Schema](#config-and-schema)
+   * [View Schema](#view-schema)
+	  * [All](#all)
+	  * [Fields](#fields)
+	  * [Dynamic Fields](#dynamic-fields)
+	  * [Copy Fields](#copy-fields)
+	  * [Field Types](#field-types)
    * [Add Schema Field](#add-schema-field)
    * [Add Copy Field](#add-copy-field)
 * [Collections](#collections)
@@ -25,7 +31,7 @@
    * [Faceted Search](#faceted-search)
 	  * [Range Facets](#range-facets)
 	  * [Pivot Facets](#pivot-facets)
-
+		 
 # Starting
 ```
 $ solr start -c -p 8983 -s example/cloud/node1/solr
@@ -42,22 +48,69 @@ $ solr start -e cloud
 $ solr stop -all
 ```
 
-# Config
+# Config and Schema
 
 A `configSet` includes at a minimum:
 1. schema file (named either `managed-schema` or `schema.xml`)
 2. `solrconfig.xml`
 
+The schema can be defined either manually or through the Schema API. The latter is preferred, since it allows you to dynamically change the schema. Then solr writes the schema configuration file and we interact with it through the rest API as seen here.
+
+## View Schema
+
+### All
+```
+$ curl http://localhost:8983/solr/<collection>/schema
+```
+
+### Fields
+```
+$ curl http://localhost:8983/solr/<collection>/schema/fields
+```
+
+Or 
+
+```
+$ curl http://localhost:8983/solr/<collection>/schema/fields/<field_name>
+```
+
+### Dynamic Fields
+```
+$ curl http://localhost:8983/solr/<collection>/schema/dynamicfields
+```
+
+Or 
+
+```
+$ curl http://localhost:8983/solr/<collection>/schema/dynamicfields/<field_name>
+```
+
+### Copy Fields
+```
+$ curl http://localhost:8983/solr/<collection>/schema/copyfields
+```
+
+### Field Types
+```
+$ curl http://localhost:8983/solr/<collection>/schema/fieldtypes
+```
+
+Or 
+
+```
+$ curl http://localhost:8983/solr/<collection>/schema/fieldtypes/<field_type_name>
+```
+
 ## Add Schema Field
 ```
-$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/films/schema
+$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/<collection>/schema
 ```
 
 ## Add Copy Field
 A copy field can be set up to take all data from all fields and index it into a new field, which we can set up as the default to search against.
 
 ```
-$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*","dest":"_text_"}}' http://localhost:8983/solr/films/schema
+$ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-copy-field" : {"source":"*","dest":"_text_"}}' http://localhost:8983/solr/<collection>/schema
 ```
 
 # Collections
@@ -77,23 +130,23 @@ $ solr delete -c <collection_name>
 ## Delete by ID
 Via `post`:
 ```
-$ post -c techproducts -d "<delete><id>TEST1</id></delete>"
+$ post -c <collection> -d "<delete><id>TEST1</id></delete>"
 ```
 
 Via `curl`:
 ```
-$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"id": "TEST1"}}'
+$ curl http://localhost:8983/solr/<collection>/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"id": "TEST1"}}'
 ```
 
 ## Delete by Query
 Via `post`:
 ```
-$ post -c techproducts -d "<delete><query>*:*</query></delete>"
+$ post -c <collection> -d "<delete><query>*:*</query></delete>"
 ```
 
 Via `curl`:
 ```
-$ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"query": "*:*"}}'
+$ curl http://localhost:8983/solr/<collection>/update?commit=true -H 'Content-type:application/json' -d '{"delete": {"query": "*:*"}}'
 ```
 
 ## Index/Add
@@ -117,7 +170,7 @@ $ curl http://localhost:8983/solr/techproducts/update?commit=true -H 'Content-ty
 
 ## Basic Search
 ```
-$ curl "http://localhost:8983/solr/techproducts/select?indent=on&q=*:*"
+$ curl "http://localhost:8983/solr/<collection>/select?indent=on&q=*:*"
 $ curl "http://localhost:8983/solr/techproducts/select?q=foundation"
 ```
 
