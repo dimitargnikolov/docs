@@ -1,6 +1,5 @@
 # Table of Contents
 
-* [Table of Contents](#table-of-contents)
 * [Starting](#starting)
    * [Guided](#guided)
 * [Stopping](#stopping)
@@ -11,8 +10,9 @@
 	  * [Dynamic Fields](#dynamic-fields)
 	  * [Copy Fields](#copy-fields)
 	  * [Field Types](#field-types)
-   * [Add Schema Field](#add-schema-field)
-   * [Add Copy Field](#add-copy-field)
+   * [Add to Schema](#add-to-schema)
+	  * [Field](#field)
+	  * [Copy Field](#copy-field)
 * [Collections](#collections)
    * [Create](#create)
    * [Delete](#delete)
@@ -101,12 +101,14 @@ Or
 $ curl http://localhost:8983/solr/<collection>/schema/fieldtypes/<field_type_name>
 ```
 
-## Add Schema Field
+## Add to Schema 
+
+### Field
 ```
 $ curl -X POST -H 'Content-type:application/json' --data-binary '{"add-field": {"name":"name", "type":"text_general", "multiValued":false, "stored":true}}' http://localhost:8983/solr/<collection>/schema
 ```
 
-## Add Copy Field
+### Copy Field
 A copy field can be set up to take all data from all fields and index it into a new field, which we can set up as the default to search against.
 
 ```
